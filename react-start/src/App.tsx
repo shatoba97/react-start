@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import ListContainer from './components/ListContainer/ListContainer';
+import DescriptionContainer from './components/DescriptionContainer/DescriptionContainer';
+import { ToDoIO } from './core/model/to-do.model';
+
 function App() {
+  const [toDoList, setToDoList] = React.useState<ToDoIO[]>([]);
+
+  const addToDo = (toDo: ToDoIO) => {
+    setToDoList([...toDoList, toDo]);
+  };
+  
+  let selectToDo = null;
+  const selectToDoFn = (id: number) => {
+    selectToDo = toDoList.find(toDo => toDo.id === id);
+  }
+  
+  console.log(toDoList)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <ListContainer toDoList={toDoList} addToDo={addToDo} selectToDo={selectToDoFn}/>
+      {/* <DescriptionContainer /> */}
+    </React.Fragment>
   );
 }
 
