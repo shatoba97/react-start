@@ -9,9 +9,13 @@ const ListContainer: React.FC<ListContainerType> = ({
   selectToDo,
 }) => {
   const addToDoFn = () => {
+    let id = Math.random()* 1000;
+    while(toDoList.findIndex(el => el.id === id) >= 0) {
+      id = Math.random() * 1000;
+    }
     addToDo({
       description: "",
-      id: 0,
+      id: +id.toFixed(),
       shortTitle: "",
       title: "",
     });
@@ -20,12 +24,12 @@ const ListContainer: React.FC<ListContainerType> = ({
   console.log(toDoList);
   return (
     <div className={styles.ListContainer} data-testid="ListContainer">
-      <div className="list">
+      <div className={styles.List}>
         {toDoList.map((toDo, i) => {
           return <ToDoItem toDoItem={toDo} selectToDo={selectToDo} key={i} />;
         })}
       </div>
-      <button className={styles.addButton} onClick={addToDoFn}>+</button>
+      <button className={styles.AddButton} onClick={addToDoFn}>+</button>
     </div>
   );
 };

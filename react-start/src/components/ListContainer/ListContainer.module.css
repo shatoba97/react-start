@@ -1,7 +1,21 @@
 .ListContainer {
-    display: flex;
-    
+  display: flex;
 }
-.addButton {
-        
+
+.List {
+  width: 150px;
+  display: block;
+  background: white;
+  padding: 20px 10px;
+  height: 250px;
+  overflow-y: scroll;
+}
+
+.AddButton {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  border: none;
+  background: #0000ff42;
+  margin-left: 15px;
 }
