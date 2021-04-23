@@ -1,9 +1,12 @@
 .ToDoItem {
-  color: red;
+  width: fit-content;
 }
 
 .Button {
-  min-width: 110px;
-  min-height: 35px;
+  width: 140px;
+  height: 35px;
   margin: 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

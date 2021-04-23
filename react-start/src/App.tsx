@@ -19,7 +19,7 @@ function App() {
 
   const removeToDo = (toDoIO: ToDoIO | null) => {
     if (toDoIO) {
-      setToDoList(toDoList.filter((toDo) => toDo.id === toDoIO.id));
+      setToDoList(toDoList.filter((toDo) => toDo.id !== toDoIO.id));
     }
     setSelectToDo(null);
   };
@@ -32,6 +32,10 @@ function App() {
       setSelectToDo(toDoSave);
     }
   };
+
+  const closeToDo = () => {
+    setSelectToDo(null);
+  }
 
   console.log(toDoList, selectToDo);
   return (
@@ -46,6 +50,7 @@ function App() {
           selectToDo={selectToDo}
           removeToDo={removeToDo}
           saveToDo={saveToDo}
+          closeToDo={closeToDo}
         />
       )}
     </div>

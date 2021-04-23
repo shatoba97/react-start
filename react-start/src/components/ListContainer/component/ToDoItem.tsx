@@ -8,7 +8,15 @@ const ToDoItem: React.FC<ToDoItemType> = ({toDoItem, selectToDo}) => {
   }
   return <div className={styles.ToDoItem} data-testid="ToDoItem">
     <button className={styles.Button} onClick={selectToDoFn}>
-      {toDoItem.shortTitle}
+      {
+        (() => {
+          if (toDoItem.shortTitle) {
+            return `Short title: ${toDoItem.shortTitle}`;
+          }
+          return '';
+        })()
+      }
+      
     </button>
   </div>
 }

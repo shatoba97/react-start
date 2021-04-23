@@ -1,21 +1,51 @@
 .DescriptionContainer {
-    width: 500px;
+  width: 500px;
 }
 
 .Inputs {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 250px;
 }
 
 .Title {
-    width: 50%;
+  width: 50%;
+  height: 35px;
+  border-radius: 7px;
 }
 
 .ShortTitle {
-    width: 50%;
+  width: 50%;
+  height: 35px;
+  border-radius: 7px;
 }
 
 .Description {
-    max-width: 95%;
-    max-height: 90%;
+  max-width: 100%;
+  max-height: 60%;
+  min-height: 60%;
+  min-width: 100%;
+}
+
+.Label {
+  min-width: 80px;
+  display: inline-block;
+}
+
+.InputContainer {
+  display: flex;
+}
+
+.Controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.Controls > button {
+  height: 35px;
+  width: 100px;
+  margin: 0 5px;
 }
