@@ -1,36 +1,54 @@
-import React from 'react';
-import './App.css';
-import DescriptionContainer from './components/DescriptionContainer/DescriptionContainer';
+import React from "react";
+import styles from "./App.module.css";
+import DescriptionContainer from "./components/DescriptionContainer/DescriptionContainer";
 
-import ListContainer from './components/ListContainer/ListContainer';
-import { ToDoIO } from './core/model/to-do.model';
+import ListContainer from "./components/ListContainer/ListContainer";
+import { ToDoIO } from "./core/model/to-do.model";
 
 function App() {
-  const [toDoList, setToDoList] = React.useState<(ToDoIO)[]>([]);
+  const [toDoList, setToDoList] = React.useState<ToDoIO[]>([]);
+  const [selectToDo, setSelectToDo] = React.useState<ToDoIO | null>(null);
 
   const addToDo = (toDo: ToDoIO) => {
     setToDoList([...toDoList, toDo]);
   };
-  
-  let selectToDo = null;
+
   const selectToDoFn = (id: number) => {
-    selectToDo = toDoList.find(toDo => toDo.id === id);
-  }
+    setSelectToDo(toDoList.find((toDo) => toDo.id === id) || null);
+  };
 
-  const removeToDo = (id: number) => {
-    setToDoList(toDoList.filter(toDo => toDo.id === id));
-  }
+  const removeToDo = (toDoIO: ToDoIO | null) => {
+    if (toDoIO) {
+      setToDoList(toDoList.filter((toDo) => toDo.id === toDoIO.id));
+    }
+    setSelectToDo(null);
+  };
 
-  const saveToDo = (toDoSave: ToDoIO) => {
-    setToDoList(toDoList.map(toDo => toDo.id === toDoSave.id ? toDoSave: toDo));
-  }
-  
-  console.log(toDoList)
+  const saveToDo = (toDoSave: ToDoIO | null) => {
+    if (toDoSave) {
+      setToDoList(
+        toDoList.map((toDo) => (toDo.id === toDoSave.id ? toDoSave : toDo))
+      );
+      setSelectToDo(toDoSave);
+    }
+  };
+
+  console.log(toDoList, selectToDo);
   return (
-    <React.Fragment>
-      <ListContainer toDoList={toDoList} addToDo={addToDo} selectToDo={selectToDoFn}/>
-      <DescriptionContainer selectToDo={selectToDo} removeToDo={removeToDo} saveToDo={saveToDo}/>
-    </React.Fragment>
+    <div className={styles.App}>
+      <ListContainer
+        toDoList={toDoList}
+        addToDo={addToDo}
+        selectToDo={selectToDoFn}
+      />
+      {!!selectToDo && (
+        <DescriptionContainer
+          selectToDo={selectToDo}
+          removeToDo={removeToDo}
+          saveToDo={saveToDo}
+        />
+      )}
+    </div>
   );
 }
 

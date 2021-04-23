@@ -21,7 +21,6 @@ const ListContainer: React.FC<ListContainerType> = ({
     });
   };
 
-  console.log(toDoList);
   return (
     <div className={styles.ListContainer} data-testid="ListContainer">
       <div className={styles.List}>

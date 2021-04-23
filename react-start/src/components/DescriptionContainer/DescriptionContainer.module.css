@@ -1,1 +1,21 @@
-.DescriptionContainer {}
+.DescriptionContainer {
+    width: 500px;
+}
+
+.Inputs {
+    display: flex;
+    flex-direction: column;
+}
+
+.Title {
+    width: 50%;
+}
+
+.ShortTitle {
+    width: 50%;
+}
+
+.Description {
+    max-width: 95%;
+    max-height: 90%;
+}
