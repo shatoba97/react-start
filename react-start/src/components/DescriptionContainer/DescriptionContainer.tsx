@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { Store } from "redux";
 import { ToDoIO } from "../../core/model/to-do.model";
+import { ActionIO } from "../../store/model/action.model";
+import { StateIO } from "../../store/model/state.model";
+import store from "../../store/store";
 import styles from "./DescriptionContainer.module.css";
 import { DescriptionContainerType } from "./DescriptionContainer.type";
+import Actions from "../../store/actions/to-do-list";
 
 const DescriptionContainer: React.FC<DescriptionContainerType> = ({
   selectToDo,
@@ -9,18 +15,26 @@ const DescriptionContainer: React.FC<DescriptionContainerType> = ({
   saveToDo,
   closeToDo,
 }) => {
-  let [toDo, setToDo] = React.useState({ ...selectToDo } as ToDoIO);
+  let toDo = selectToDo as ToDoIO;
 
-  useEffect(() => {
-    setToDo(selectToDo as ToDoIO);
-  }, [selectToDo]);
-
+  console.log(selectToDo);
   const titleChange = (value: string) =>
-    setToDo({ ...toDo, title: value } as ToDoIO);
+    store.dispatch(
+      Actions.selectToDo({ ...(selectToDo as ToDoIO), title: value })
+    );
+  // setToDo({ ...toDo, title: value } as ToDoIO);
   const shortTitleChange = (value: string) =>
-    setToDo({ ...toDo, shortTitle: value } as ToDoIO);
+    store.dispatch(
+      Actions.selectToDo({ ...(selectToDo as ToDoIO), shortTitle: value })
+    );
+
+  // setToDo({ ...toDo, shortTitle: value } as ToDoIO);
   const descriptionChange = (value: string) =>
-    setToDo({ ...toDo, description: value } as ToDoIO);
+    store.dispatch(
+      Actions.selectToDo({ ...(selectToDo as ToDoIO), description: value })
+    );
+
+  // setToDo({ ...toDo, description: value } as ToDoIO);
 
   return (
     <React.Fragment>
@@ -87,4 +101,10 @@ const DescriptionContainer: React.FC<DescriptionContainerType> = ({
   );
 };
 
-export default DescriptionContainer;
+const mapStoreToSelctToDo = (store: StateIO) => {
+  return {
+    selectToDo: store.selectToDo,
+  };
+};
+
+export default connect(mapStoreToSelctToDo)(DescriptionContainer);

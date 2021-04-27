@@ -1,41 +1,51 @@
 import React from "react";
+import { connect, Provider } from "react-redux";
 import styles from "./App.module.css";
 import DescriptionContainer from "./components/DescriptionContainer/DescriptionContainer";
+import actions from "./store/actions/to-do-list";
 
 import ListContainer from "./components/ListContainer/ListContainer";
 import { ToDoIO } from "./core/model/to-do.model";
+import { AppType } from "./App.type";
+import { StateIO } from "./store/model/state.model";
+import store from "./store/store";
 
-function App() {
-  const [toDoList, setToDoList] = React.useState<ToDoIO[]>([]);
-  const [selectToDo, setSelectToDo] = React.useState<ToDoIO | null>(null);
+const App: React.FC<StateIO> = ({ toDoList, selectToDo }) => {
+  // const [toDoList, setToDoList] = React.useState<ToDoIO[]>([]);
+  // const [selectToDo, setSelectToDo] = React.useState<ToDoIO | null>(null);
+  // store.subscribe(() => {
+  //   toDoList = store.getState().toDoList;
+  //   console.log('in subscribe', toDoList)
 
+  // });
+  console.log('after subscribe', toDoList)
   const addToDo = (toDo: ToDoIO) => {
-    setToDoList([...toDoList, toDo]);
+    store.dispatch(actions.addToDo(toDo));
   };
 
   const selectToDoFn = (id: number) => {
-    setSelectToDo(toDoList.find((toDo) => toDo.id === id) || null);
+    store.dispatch(
+      actions.selectToDo(toDoList.find((toDo) => toDo.id === id) || null)
+    );
   };
 
   const removeToDo = (toDoIO: ToDoIO | null) => {
     if (toDoIO) {
-      setToDoList(toDoList.filter((toDo) => toDo.id !== toDoIO.id));
+      store.dispatch(actions.removeToDo(toDoIO));
     }
-    setSelectToDo(null);
+    store.dispatch(actions.selectToDo(null));
   };
 
-  const saveToDo = (toDoSave: ToDoIO | null) => {
-    if (toDoSave) {
-      setToDoList(
-        toDoList.map((toDo) => (toDo.id === toDoSave.id ? toDoSave : toDo))
-      );
-      setSelectToDo(toDoSave);
+  const saveToDo = (toDo: ToDoIO | null) => {
+    if (toDo) {
+      store.dispatch(actions.saveToDo(toDo));
+      store.dispatch(actions.selectToDo(toDo));
     }
   };
 
   const closeToDo = () => {
-    setSelectToDo(null);
-  }
+    store.dispatch(actions.selectToDo(null));
+  };
 
   console.log(toDoList, selectToDo);
   return (
@@ -46,15 +56,21 @@ function App() {
         selectToDo={selectToDoFn}
       />
       {!!selectToDo && (
-        <DescriptionContainer
-          selectToDo={selectToDo}
-          removeToDo={removeToDo}
-          saveToDo={saveToDo}
-          closeToDo={closeToDo}
-        />
+        <Provider store={store}>
+          <DescriptionContainer
+            removeToDo={removeToDo}
+            saveToDo={saveToDo}
+            closeToDo={closeToDo}
+          />
+        </Provider>
       )}
     </div>
   );
+};
+const mapStoreToProps = (state: StateIO) => {
+  debugger
+  return {toDoList: state.toDoList,
+  selectToDo: state.selectToDo,}
 }
 
-export default App;
+export default connect(mapStoreToProps, actions)(App);
