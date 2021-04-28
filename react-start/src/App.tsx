@@ -68,7 +68,6 @@ const App: React.FC<StateIO> = ({ toDoList, selectToDo }) => {
   );
 };
 const mapStoreToProps = (state: StateIO) => {
-  debugger
   return {toDoList: state.toDoList,
   selectToDo: state.selectToDo,}
 }

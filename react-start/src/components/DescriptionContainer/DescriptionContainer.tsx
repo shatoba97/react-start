@@ -17,7 +17,6 @@ const DescriptionContainer: React.FC<DescriptionContainerType> = ({
 }) => {
   let toDo = selectToDo as ToDoIO;
 
-  console.log(selectToDo);
   const titleChange = (value: string) =>
     store.dispatch(
       Actions.selectToDo({ ...(selectToDo as ToDoIO), title: value })

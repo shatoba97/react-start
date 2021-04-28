@@ -7,7 +7,7 @@ import { StateIO } from "../model/state.model";
 const reducer: Reducer<StateIO, ActionIO> = (state = initialState, action: ActionIO): StateIO => {
   switch (action.type) {
     case GET_TO_DO_LIST: return { ...state, toDoList: action.value };
-    case ADD_TO_DO: return { ...state, toDoList: [...state?.toDoList as [], action.value] };
+    case ADD_TO_DO: return { ...state, toDoList: [...state?.toDoList, action.value] };
     case SELECT_TO_DO: return {...state, selectToDo: action.value};
     case REMOVE_TO_DO: return {...state, toDoList: state?.toDoList.filter((toDo) => toDo.id !== action.value.id), selectToDo: null};
     case SAVE_TO_DO: return {...state, toDoList: state?.toDoList.map((toDoState) => toDoState.id === action.value.id? action.value : toDoState)};
